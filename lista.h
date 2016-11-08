@@ -2,10 +2,11 @@
 #include <stdio.h>
 
 typedef struct nodo{
-	char id;
+	char * id;
   double largo;
   double alto;
   double ancho;
+	double volumen;
 	struct nodo * sig;
 }NODO;
 
@@ -14,6 +15,51 @@ typedef struct lista{
   NODO * ultimo;
 }LISTA;
 
+void swap(NODO * a, NODO * b){
+	if(a!=NULL && b!= NULL){
+		char * idAUX = (char*)malloc(20*sizeof(char));
+	  double largoAUX;
+	  double altoAUX;
+	  double anchoAUX;
+		double volumenAUX;
+		idAUX = a->id;
+		largoAUX = a->largo;
+		altoAUX = a->alto;
+		anchoAUX = a->ancho;
+		volumenAUX = a->volumen;
+		a->id = b->id;
+		a->largo = b->largo;
+		a->alto = b->alto;
+		a->ancho = b->ancho;
+		a->volumen = b->volumen;
+		b->id = idAUX;
+		b->largo = largoAUX;
+		b->alto = altoAUX;
+		b->ancho = anchoAUX;
+		b->volumen = volumenAUX;
+	}
+}
+
+LISTA * ordenar_por_volumen(LISTA * L){
+	if (L!=NULL){
+		if(L->primero !=NULL){
+			NODO * i = L->primero;
+			NODO * j= NULL;
+			while(i!=NULL){
+				j= i->sig;
+				while(j!=NULL){
+					if (j->volumen <= i->volumen) {
+						swap(j,i);
+					}
+					j=j->sig;
+				}
+				i=i->sig;
+			}
+			return L;
+		}
+	}
+
+}
 
 int empty(LISTA* L){
 	if(L!=NULL){
@@ -34,22 +80,24 @@ LISTA* crearLista(){
 	return nueva_L;
 }
 
-NODO* crearNodo(char id, double largo, double alto, double ancho){
+NODO* crearNodo(char * id, double largo, double alto, double ancho){
 	NODO * nuevo_nodo = (NODO*)malloc(sizeof(NODO));
 	nuevo_nodo->id = id;
   nuevo_nodo->largo =largo;
   nuevo_nodo->alto =alto;
   nuevo_nodo->ancho =ancho;
+	nuevo_nodo->volumen = nuevo_nodo->largo * nuevo_nodo->alto * nuevo_nodo->ancho;
 	nuevo_nodo->sig = NULL;
 	return nuevo_nodo;
 }
+
 
 void verLista(LISTA* L){
 	if(L !=NULL){
 		if(!empty(L)){
 			NODO* aux = L->primero;
 			while(aux!=NULL){
-				printf(" %c %.3f %.3f %.3f", aux->id, aux ->largo, aux->alto, aux->ancho);
+				printf(" %s %.5f cm. %.5f cm. %.5f cm. %.5f cm³.\n", aux->id, aux ->largo, aux->alto, aux->ancho, aux->volumen);
 				aux=aux->sig;
 			}
 			printf("\n");
@@ -59,23 +107,6 @@ void verLista(LISTA* L){
 	}
 }
 
-void imprimirLista(FILE* file, LISTA* L){
-	if(L !=NULL && file !=NULL){
-		if(!empty(L)){
-			NODO* aux = L->primero;
-			fprintf(file,"[");
-			while(aux!=NULL){
-				if(aux->sig == NULL){
-					fprintf(file,"%d]", aux->id);
-				}else{
-					fprintf(file,"%d ", aux->id);
-				}
-				aux=aux->sig;
-			}
-			fprintf(file,"\n");
-		}
-	}
-}
 
 LISTA* eliminar_inicio(LISTA* L){
 	if(L!=NULL){
@@ -127,7 +158,7 @@ LISTA* eliminar_final(LISTA * L){
 	return NULL;
 }
 
-LISTA* insertar_final(LISTA * L, char id, double largo, double alto, double ancho){
+LISTA* insertar_final(LISTA * L, char * id, double largo, double alto, double ancho){
 	if(L!=NULL){
 		NODO* aux = L->ultimo;
 		NODO * nuevo = crearNodo(id,largo,alto,ancho);
@@ -146,7 +177,7 @@ LISTA* insertar_final(LISTA * L, char id, double largo, double alto, double anch
 	return NULL;
 }
 
-LISTA* insertar_inicio(LISTA* L, char id, double largo, double alto, double ancho){
+LISTA* insertar_inicio(LISTA* L, char * id, double largo, double alto, double ancho){
 	if(L!=NULL){
 		NODO* aux = L->primero;
 		NODO * nuevo = crearNodo(id,largo,alto,ancho);

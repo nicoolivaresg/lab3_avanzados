@@ -88,7 +88,8 @@ int main(int argc, char const *argv[]) {
       printf("Error en la lectura de archivos: %s\n", argv[1]);
     }
   }else{
-    printf("Faltan o sobran argumentos\n");
+    printf("Para ejecutar ingrese:\n\n\t");
+    printf("./main [nombre_entrada] [nombre_salida]\n");
     return 1;
   }
   return 0;

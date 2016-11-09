@@ -1,0 +1,16 @@
+Compilar en terminal Linux:
+
+  make -f makefile
+
+Compilar en CMD Windows:
+
+  gcc main.c lista.h -o main
+
+
+Ejecutar en terminal Linux:
+
+  ./main [nombre_entrada] [nombre_salida]
+
+Ejecutar en CMD Windows:
+
+  main.exe [nombre_entrada] [nombre_salida]

@@ -1,0 +1,15 @@
+Conjunto: {A,B,C,D,E,F}
+Donde A.vol < B.vol < C.vol < D.vol < E.vol < F.vol
+
+Por cada elemento en el conjunto =>
+
+            CAJA                          FUERA
+||                          ||
+||                          ||
+||                          ||
+||                          ||
+||                          ||
+||    D                     ||
+||                          ||
+||    A       B         C   ||              E
+||==========================||
